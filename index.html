@@ -22,26 +22,27 @@
               <div class="col-3">
               </div>
               <div class="col-6 text-center">
-                <h1 class="display-1">Non va</h1>
+                <div class="server-status">
+                    <h1 class="display-1"></h1>
+                </div>
               </div>
               <div class="col-3">
               </div>
             </div>
           </div>
     </body>
+    <script src="https://mcapi.us/scripts/minecraft.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: 'https://api.mcsrvstat.us/simple/79.19.213.52:25567',
-                type: 'get',
-                dataType: "json",
-                success: function(data){ 
-                    alert(JSON.stringify(data));
-                },
-                error: function(data){
-                    alert(data);
-                }
-                });
+        MinecraftAPI.getServerStatus('79.19.213.52', {
+            port: 25567
+        }, function (err, status) {
+            if (err) {
+                return document.querySelector('.display-1').innerHTML = 'Non va';
+            }
+            console.log(JSON.stringify(status));
+            console.log(err);
+            // you can change these to your own message!
+            document.querySelector('.display-1').innerHTML = status.online ? 'Va' : 'Non va';
         });
     </script>
 </html>
